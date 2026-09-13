@@ -1,0 +1,49 @@
+plugins {
+    id 'fabric-loom' version '1.11.8'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base { archivesName = 'authcredential-client' }
+
+repositories {
+    maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+processResources {
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") { expand "version": project.version }
+}
+
+// ---- 构建期内嵌密钥/ID：编译前运行 keygen 重新生成 ServerBindingConfig/CredentialConfig ----
+def generatedPackageDir = file('src/main/java/com/Insfinity/authcredential')
+
+tasks.register('embedKeys', JavaExec) {
+    dependsOn ':keygen:classes'
+    // 用 sourceSets.output（懒加载 FileCollection）而非 runtimeClasspath，避免在配置阶段触发跨项目配置解析
+    classpath = files(project(':keygen').sourceSets.main.output)
+    mainClass = 'com.Insfinity.authcredential.tools.KeyGen'
+    args generatedPackageDir.toString(), project.file('embed/keys.properties').toString()
+    inputs.files project.file('embed/keys.properties')
+    outputs.dir generatedPackageDir
+}
+
+compileJava.dependsOn 'embedKeys'

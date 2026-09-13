@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "auth_credential_server",
+  "version": "${version}",
+  "name": "AuthCredential Server",
+  "description": "auth_credential 服务端验证模组（补齐）：登录下发 auth_query、校验签名与激活记录、接收 auth_info_play 上报。",
+  "authors": [ "Insfinity" ],
+  "license": "ARR",
+  "environment": "server",
+  "entrypoints": {
+    "main": [ "com.Insfinity.authcredential.server.AuthCredentialServer" ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.5",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": ">=0.116.17"
+  }
+}

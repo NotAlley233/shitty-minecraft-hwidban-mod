@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "auth_credential",
+  "version": "${version}",
+  "name": "gottahaveu",
+  "description": "auth_credential 客户端认证模组（由反编译源码按 Yarn 命名还原，构建期内嵌密钥/ID）。",
+  "authors": [ "Insfinity" ],
+  "contact": {},
+  "license": "ARR",
+  "environment": "client",
+  "entrypoints": {
+    "main": [ "com.Insfinity.authcredential.AuthCredential" ],
+    "client": [ "com.Insfinity.authcredential.client.AuthCredentialClient" ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.5",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": ">=0.116.17"
+  }
+}

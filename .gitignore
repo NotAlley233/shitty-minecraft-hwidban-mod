@@ -1,0 +1,22 @@
+# Gradle / 构建缓存
+.gradle/
+**/build/
+build/
+dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# 系统
+Thumbs.db
+.DS_Store
+*.log
+
+# 认证/令牌 (若产生)
+*.pem
+*.key
